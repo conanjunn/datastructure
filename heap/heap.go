@@ -1,7 +1,5 @@
 package heap
 
-import ()
-
 func NewHeap(arr []int64) *Heap {
 	heap := &Heap{
 		arr: arr,
@@ -49,6 +47,7 @@ func (this *Heap) heapify() {
 func (this *Heap) goUp(index int64) {
 	pIndex := this.parentIndex(index)
 	if this.arr[index] > this.arr[pIndex] {
+		// 比父元素大就上浮
 		this.swap(index, pIndex)
 		this.goUp(pIndex)
 	}
@@ -66,13 +65,15 @@ func (this *Heap) goDown(index int64) {
 	if right < int64(len(this.arr)) && this.arr[left] < this.arr[right] {
 		baseIndex = right
 	}
+
 	if this.arr[index] < this.arr[baseIndex] {
+		// 让当前需下沉的元素和较大的一个交换位置
 		this.swap(index, baseIndex)
 		this.goDown(baseIndex)
 	}
 }
 
-// 增加元素到堆
+// 增加元素到堆 (将新元素添加到最末尾，然后做上浮操作)
 func (this *Heap) Add(val int64) {
 	this.arr = append(this.arr, val)
 	this.goUp(int64(len(this.arr)) - 1)
@@ -88,6 +89,7 @@ func (this *Heap) Take() int64 {
 	this.swap(0, int64(len(this.arr))-1)
 	// 删除数组最后一项
 	this.arr = this.arr[0 : len(this.arr)-1]
+	// 做下沉操作
 	this.goDown(0)
 	return ret
 }
@@ -98,5 +100,6 @@ func (this *Heap) replace(val int64) {
 		panic("error")
 	}
 	this.arr[0] = val
+	// 做下沉操作
 	this.goDown(0)
 }

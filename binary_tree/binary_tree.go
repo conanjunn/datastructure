@@ -1,8 +1,8 @@
 package binary_tree
 
 import (
+	"datastructure/queue"
 	"fmt"
-	"queue"
 )
 
 type node struct {
@@ -65,7 +65,7 @@ func (this *BinaryTree) doPreOrder(ele *node, depth int64, showArr [][]interface
 	return showArr, resDepth
 }
 
-// 中序遍历 数据将按顺序返回
+// 中序遍历 数据将按顺序返回, 相当于一次排序
 func (this *BinaryTree) InOrder() {
 	this.doInOrder(this.root, 0)
 }
@@ -99,7 +99,7 @@ func (this *BinaryTree) doPostOrder(ele *node, depth int64) {
 	fmt.Printf("%d\n", ele.value)
 }
 
-// 层序遍历
+// 层序遍历  利用队列实现
 func (this *BinaryTree) LevelOrder() {
 	q := &queue.Queue{}
 	q.Enqueue(this.root)
